@@ -1,12 +1,21 @@
-package com.example.dao
+package workWithMe.dao.customer
+
+import io.ktor.util.logging.*
+import kotlinx.coroutines.runBlocking
+import workWithMe.db.Case
+import workWithMe.db.Customer
+import workWithMe.db.DatabaseFactory.dbQuery
+import workWithMe.dto.CaseDto
+import workWithMe.dto.CustomerDto
+import java.util.UUID
 
 
-//class DAOUserImpl() : DAOUser {
-//
-//    private val logger = KtorSimpleLogger("DAOUserImpl")
-//
-//
-//    override suspend fun changeUserRelationToUserRelationDto(userRelationList: List<UserRelation>): List<UserRelationDto?> {
+class DAOCustomerImpl() : DAOCustomer {
+
+    val logger = KtorSimpleLogger("DAOUserImpl")
+
+
+    //    override suspend fun changeUserRelationToUserRelationDto(userRelationList: List<UserRelation>): List<UserRelationDto?> {
 //        return dbQuery {
 //            val userRelationDtoList = mutableListOf<UserRelationDto?>()
 //
@@ -156,23 +165,8 @@ package com.example.dao
 //            userList
 //        }
 //    }
-//
-//    override suspend fun findAllUserDto(): List<UserDto?> {
-//        return dbQuery {
-//            val userDtoList = mutableListOf<UserDto?>()
-//            val userListIterable = User.all()
-//            val userList = userListIterable.map { it }
-//            userList.map {
-//                val userDto = changeUserToUserDto(it)
-//                userDtoList.add(userDto)
-//            }
-//
-//            userDtoList
-//        }
-//
-//
-//    }
-//
+
+
 //    override suspend fun findUserByNationalId(userNationalId: Int): User? {
 //        return dbQuery {
 //            val userIterable = User.find { Users.nationalId eq userNationalId }
@@ -199,23 +193,125 @@ package com.example.dao
 //        }
 //    }
 //
-//    override suspend fun addNewUser(userDto: UserDto): User {
+
+    override suspend fun changeCaseToCaseDto(case: Case): CaseDto {
+        return dbQuery {
+
+            val customer = case.referrersOnCustomer.map { it }.firstOrNull()
+            val customerDto = customer?.let { changeCustomerToCustomerDto(it) }
+
+            val caseDto = CaseDto(
+
+                iD =case.iD ,
+                caseId= case.caseId ,
+                referrersOnCustomer = customerDto
+            )
+
+            caseDto
+        }
+    }
+
+    override suspend fun changeCustomerToCustomerDto(customer: Customer): CustomerDto {
+        return dbQuery {
+
+//            val userRelationParentOfList = user.parent.map { it }
+//            val parentOf = changeUserRelationToUserRelationDto(userRelationParentOfList)
 //
-//        return dbQuery {
+//            val userRelationChildOfList = user.child.map { it }
+//            val childOf = changeUserRelationToUserRelationDto(userRelationChildOfList)
 //
-//            val newUser = User.new {
-//                nationalId = userDto.nationalId
-//                name = userDto.name
-//                password = userDto.password
-//                phone = userDto.phone
-//                email = userDto.email
-//                profilePic = userDto.profilePic
-//            }
-//            newUser.flush()
-//            newUser
-//        }
+//            val userTaskTaskCreatedOfList = user.taskCreated.map { it }
+//            val taskCreatedOf = changeUserTaskToUserTaskDto(userTaskTaskCreatedOfList)
 //
-//    }
+//            val userTaskTaskReceivedOfList = user.taskCreated.map { it }
+//            val taskReceivedOf = changeUserTaskToUserTaskDto(userTaskTaskReceivedOfList)
+//
+//            val caseList = user.emotion.map { it }
+//            val case = changeEmotionToEmotionDto(emotionEmotionOfList)
+
+            val customerDto = CustomerDto(
+                nationalId = customer.nationalId,
+                name = customer.name,
+                password = customer.password,
+                phone = customer.phone,
+                email = customer.email,
+                homeAddress = customer.homeAddress,
+                businessAddress = customer.businessAddress,
+                creditType = customer.creditType,
+                dateOfRegistration = customer.dateOfRegistration,
+            )
+            customerDto
+        }
+    }
+
+    override suspend fun findAllCaseDto(): List<CaseDto?> {
+        return dbQuery {
+            val caseDtoList = mutableListOf<CaseDto?>()
+            val caseDtoIterableList = Case.all()
+
+            val caseList = caseDtoIterableList.map { it }
+            caseList.map {
+                val caseDto = changeCaseToCaseDto(it)
+                caseDtoList.add(caseDto)
+            }
+
+            caseDtoList
+        }
+    }
+
+    override suspend fun findAllCustomerDto(): List<CustomerDto?> {
+        return dbQuery {
+            val customerDtoList = mutableListOf<CustomerDto?>()
+            val customerDtoIterableList = Customer.all()
+
+            val customerList = customerDtoIterableList.map { it }
+            customerList.map {
+                val customerDto = changeCustomerToCustomerDto(it)
+                customerDtoList.add(customerDto)
+            }
+
+            customerDtoList
+        }
+    }
+
+    override suspend fun addNewCase(caseDto: CaseDto): Case {
+        logger.info("in addNewCase --> ")
+        return dbQuery {
+
+            val newCase = Case.new {
+                caseId = UUID.randomUUID().toString().substring(0, 10)
+            }
+            newCase.flush()
+            logger.info("end addNewCase --> ")
+            newCase
+        }
+
+    }
+
+    override suspend fun addNewCustomer(customerDto: CustomerDto, case: Case): Customer {
+        logger.info("in addNewCustomer --> ")
+        return dbQuery {
+            logger.info("in addNewCustomer   dbQuery --> ")
+            val newCustomer = Customer.new {
+                logger.info("in addNewCustomer   newCustomer --> ")
+                nationalId = customerDto.nationalId
+                name = customerDto.name
+                password = customerDto.password
+                phone = customerDto.phone
+                email = customerDto.email
+                homeAddress = customerDto.homeAddress
+                businessAddress = customerDto.businessAddress
+                creditType = customerDto.creditType
+                dateOfRegistration = customerDto.dateOfRegistration
+                logger.info("in addNewCustomer   end of newCustomer --> ")
+                pointToCase = case
+            }
+            newCustomer.flush()
+            logger.info("end addNewCustomer --> ")
+            newCustomer
+        }
+
+    }
 //
 //    override suspend fun addNewRelation(parentOfUserDto: UserDto, thisUserDto: UserDto) {
 //        dbQuery {
@@ -454,33 +550,27 @@ package com.example.dao
 //
 //
 //
-//}
-//
-//val dao: DAOUser = DAOUserImpl().apply {
-//
-//    runBlocking {
+}
+
+val dao: DAOCustomer = DAOCustomerImpl().apply {
+
+    runBlocking {
 //        if (findAllUserDto().isEmpty()) {
-//
-//
-//
-//            val userDto1 = UserDto(111, "narmila", "1234", "0919", "gmail1", "3")
-//
-//            val userDto2 = UserDto(222, "farzad", "1234", "0918", "gmail2", "1")
-//
-//            val userDto3 = UserDto(333, "ardi", "1234", "0935", "gmail3", "-3")
-//
-//
-//
-//            addNewUser(userDto1)
-//            addNewUser(userDto2)
-//            addNewUser(userDto3)
-//            addNewRelation(userDto1,userDto2)
-//            addNewRelation(userDto1,userDto2)
-//            addNewRelation(userDto1,userDto3)
-//            addNewRelation(userDto1,userDto3)
+
+
+        val caseDto = CaseDto()
+        val customerDto = CustomerDto(name = "narmila")
+
+
+        val case = addNewCase(caseDto)
+        logger.info("case is --> $case")
+        val customer = addNewCustomer(customerDto, case)
+        logger.info("customer is --> $customer")
+
+
 //        }
-//    }
-//}
+    }
+}
 
 
 

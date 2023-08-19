@@ -3,8 +3,8 @@ package workWithMe.dto
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Customer(
-    val id : String,
+data class CuttingWorkDto(
+    val iD : Int? = null,
     val nationalId : String = "nationalId",
     val name : String = "name",
     val password : String = "password",
@@ -14,8 +14,9 @@ data class Customer(
     val businessAddress : String = "businessAddress",
     val creditType : String = "creditType",
     val dateOfRegistration : String = "dateOfRegistration",
-    val userStorage : UserStorage? = null,
-    var userRating : UserRating? = null,
-    val cases: Cases? = null,
+    val pointToCase: CaseDto? = null,   // به رکوردی از جدول case اشاره دارد
+    val referrersOnUserStorage : UserStorageDto? = null,// ستون pointToCuttingWork جدول UserStorageDto به این ستون اشاره دارد
+    var referrersOnUserRating : UserRatingDto? = null,// ستون pointToCuttingWork جدول UserRatingDto به این ستون اشاره دارد
 
-    )
+
+)

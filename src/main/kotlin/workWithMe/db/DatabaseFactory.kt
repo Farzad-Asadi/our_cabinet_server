@@ -21,10 +21,14 @@ object DatabaseFactory {
                 } ?: "")
 //        val user = "myself"
 //        val password = "secret"
-        val database = Database.connect(createHikariDataSource(url = jdbcURL, driver = driverClassName))
+
+        val database = Database.connect(jdbcURL,driverClassName)
+//        val database = Database.connect(createHikariDataSource(url = jdbcURL, driver = driverClassName))
+
+
         transaction(database) {
             // Statements here
-            SchemaUtils.create(Users , UserRelations, UserTasks, Emotions, inBatch = true)
+            SchemaUtils.create(Cases , Customers, inBatch = true)
 
             addLogger(StdOutSqlLogger)
 

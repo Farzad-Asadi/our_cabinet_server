@@ -3,8 +3,8 @@ package workWithMe.dto
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Installer(
-    val id : String,
+data class TransporterDto(
+    val iD : Int? = null,
     val nationalId : String = "nationalId",
     val name : String = "name",
     val password : String = "password",
@@ -14,7 +14,9 @@ data class Installer(
     val businessAddress : String = "businessAddress",
     val creditType : String = "creditType",
     val dateOfRegistration : String = "dateOfRegistration",
-    val userStorage : UserStorage? = null,
-    var userRating : UserRating? = null,
+    val pointToCase: CaseDto? = null,   // به رکوردی از جدول case اشاره دارد
+    val referrersOnUserStorage : UserStorageDto? = null,// ستون pointToTransporter جدول UserStorageDto به این ستون اشاره دارد
+    var referrersOnUserRating : UserRatingDto? = null,// ستون pointToTransporter جدول UserRatingDto به این ستون اشاره دارد
 
-    )
+
+)

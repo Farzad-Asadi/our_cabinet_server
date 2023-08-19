@@ -1,12 +1,15 @@
-package com.example.dao
+package workWithMe.dao.customer
+
+import workWithMe.db.Case
+import workWithMe.db.Customer
+import workWithMe.dto.CaseDto
+import workWithMe.dto.CustomerDto
 
 
-interface DAOUser {
+interface DAOCustomer {
 
 
-
-
-//    suspend fun changeUserRelationToUserRelationDto(userRelationList : List<UserRelation>): List<UserRelationDto?>
+    //    suspend fun changeUserRelationToUserRelationDto(userRelationList : List<UserRelation>): List<UserRelationDto?>
 //
 //    suspend fun changeUserTaskToUserTaskDto(userTaskList: List<UserTask>): List<UserTaskDto?>
 //
@@ -14,19 +17,22 @@ interface DAOUser {
 //
 //
 //
-//    suspend fun changeUserToUserDto(user: User): UserDto
+    suspend fun changeCaseToCaseDto(case: Case): CaseDto
+    suspend fun changeCustomerToCustomerDto(customer: Customer): CustomerDto
 //
-//    suspend fun findUserParentList(user: User): List<User?>
+
 //
 //    suspend fun findUserChildrenList(user: User): List<User?>
 //
-//    suspend fun findAllUserDto(): List<UserDto?>
+    suspend fun findAllCustomerDto(): List<CustomerDto?>
+    suspend fun findAllCaseDto(): List<CaseDto?>
 //
 //    suspend fun findUserByNationalId(userNationalId: Int): User?
 //
 //    suspend fun findUserDtoByNationalId(userNationalId: Int): UserDto
 //
-//    suspend fun addNewUser(userDto: UserDto): User
+    suspend fun addNewCase(caseDto: CaseDto): Case
+    suspend fun addNewCustomer(customerDto: CustomerDto, case: Case): Customer
 //
 //    suspend fun addNewRelation(parentOfUserDto: UserDto, thisUserDto: UserDto)
 //

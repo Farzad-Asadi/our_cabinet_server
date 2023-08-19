@@ -1,22 +1,28 @@
 package workWithMe.routes
 
 
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import workWithMe.dao.customer.dao
 
 
-fun Route.userRouting() {
+fun Route.apiRouting() {
     route("/user") {
 
-//        get {       //ارسال تمامی User ها
-////            call.application.environment.log.info("Hello from /api/v1!")
-//            if (dao.findAllUserDto().isNotEmpty()) {
-//                val allUserDto = dao.findAllUserDto()
-//                call.respond(allUserDto)
-//            } else {
-//                call.respondText("User list are empty", status = HttpStatusCode.OK)
-//
-//            }
-//        }
+        get {       //ارسال تمامی User ها
+//            call.application.environment.log.info("Hello from /api/v1!")
+            if (dao.findAllCaseDto().isNotEmpty()) {
+                val allCaseDto = dao.findAllCaseDto()
+                call.application.environment.log.info("allCaseDto is ---> $allCaseDto")
+                call.respond(allCaseDto)
+            } else {
+                call.respondText("User list are empty", status = HttpStatusCode.OK)
+
+            }
+
+        }
 //
 //        get("/{nationalId?}") {   // ارسال یک User  با nationalId
 //
