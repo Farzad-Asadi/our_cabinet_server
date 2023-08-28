@@ -20,10 +20,6 @@ class Case(id: EntityID<Int>) : IntEntity(id) {
     var caseId by Cases.caseId
     val referrersOnCustomer by Customer optionalReferrersOn  Customers.pointToCase
 
-//    val parent by UserRelation optionalReferrersOn  UserRelations.parent
-//    val child by UserRelation optionalReferrersOn  UserRelations.child
-//    val taskCreated by UserTask optionalReferrersOn  UserTasks.taskCreator
-//    val taskReceived by UserTask optionalReferrersOn  UserTasks.taskReceiver
-//    val emotion by Emotion optionalReferrersOn  Emotions.emotionOf
+
 }
 

@@ -1,6 +1,7 @@
-package workWithMe.dto
+package workWithMe.dto.cses.caseChild.order
 
 import kotlinx.serialization.Serializable
+import workWithMe.dto.cses.CaseDto
 
 @Serializable
 data class OrderDto(

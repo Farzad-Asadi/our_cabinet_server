@@ -1,9 +1,12 @@
-package workWithMe.dto
+package workWithMe.dto.cses.caseChild.user
 
 import kotlinx.serialization.Serializable
+import workWithMe.dto.cses.caseChild.user.userChild.UserRatingDto
+import workWithMe.dto.cses.caseChild.user.userChild.UserStorageDto
+import workWithMe.dto.cses.CaseDto
 
 @Serializable
-data class TransporterDto(
+data class AssemblerDto(
     val iD : Int? = null,
     val nationalId : String = "nationalId",
     val name : String = "name",
@@ -15,8 +18,8 @@ data class TransporterDto(
     val creditType : String = "creditType",
     val dateOfRegistration : String = "dateOfRegistration",
     val pointToCase: CaseDto? = null,   // به رکوردی از جدول case اشاره دارد
-    val referrersOnUserStorage : UserStorageDto? = null,// ستون pointToTransporter جدول UserStorageDto به این ستون اشاره دارد
-    var referrersOnUserRating : UserRatingDto? = null,// ستون pointToTransporter جدول UserRatingDto به این ستون اشاره دارد
+    val referrersOnUserStorage : UserStorageDto? = null,// ستون pointToAssembler جدول UserStorageDto به این ستون اشاره دارد
+    var referrersOnUserRating : UserRatingDto? = null,// ستون pointToAssembler جدول UserRatingDto به این ستون اشاره دارد
 
 
 )

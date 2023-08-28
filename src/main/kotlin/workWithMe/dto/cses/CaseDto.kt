@@ -1,7 +1,11 @@
-package workWithMe.dto
+package workWithMe.dto.cses
 
-import ir.workwithme.our_cabinets_client.model.dto.*
 import kotlinx.serialization.Serializable
+import workWithMe.dto.cses.caseChild.CaseProcessDto
+import workWithMe.dto.cses.caseChild.CaseStorageDto
+import workWithMe.dto.cses.caseChild.ContractDto
+import workWithMe.dto.cses.caseChild.order.OrderDto
+import workWithMe.dto.cses.caseChild.user.*
 
 @Serializable
 data class CaseDto(

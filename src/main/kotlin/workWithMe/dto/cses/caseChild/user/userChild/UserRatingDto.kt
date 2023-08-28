@@ -1,11 +1,12 @@
-package workWithMe.dto
+package workWithMe.dto.cses.caseChild.user.userChild
 
-import ir.workwithme.our_cabinets_client.model.dto.AssemblerDto
 import kotlinx.serialization.Serializable
+import workWithMe.dto.cses.caseChild.user.*
 
 @Serializable
-data class UserStorageDto(
+data class UserRatingDto(
     val iD : Int? = null,
+    val userHistory : String = "userHistory",
     val pointToCustomer : CustomerDto? = null,
     val pointToExhibitor : ExhibitorDto? = null,
     val pointToDesigner : DesignerDto? = null,
